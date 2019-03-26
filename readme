@@ -1,0 +1,20 @@
+1) установить twig
+    
+    composer require twig/twig:1.*
+
+2) установить конфиг http.conf
+
+    RewriteEngine On  
+	RewriteCond %{REQUEST_FILENAME} !-f  
+	RewriteCond %{REQUEST_FILENAME} !-d  
+	RewriteRule ^(.*) index.php?url=$1 [L,QSA] 
+
+
+   или 	nginx.conf
+
+	location / {
+    	try_files $uri $uri/ /index.php?$query_string;
+	}
+
+
+3) восстановить db, прописать в конфиге доступ к БД
