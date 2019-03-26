@@ -1,0 +1,20 @@
+<div>
+
+	{% if username %}
+	<form action='/admin/update' method="POST">
+		<input type="hidden" name="id" value="{{ id }}"/>
+	Пользователь	<div><input type="text" name="username" value="{{ username }}" disabled/></div><br/>
+	Описание задачи      	<div><textarea name="description">{{ description }}</textarea></div>
+	Статус      	<div><select name="status">
+						<option value="0" {% if status == 0 %}selected{% endif %} >TODO</option>
+						<option value="1" {% if status == 1 %}selected{% endif %} >в работе</option>
+						<option value="2" {% if status == 2 %}selected{% endif %}>тестируется</option>
+						<option value="3" {% if status == 3 %}selected{% endif %}>выполнено</option>
+					</select> </div>
+	<input type="submit" value="Save" />
+	</form>
+	{% else %}
+		<div style="color: red">Пользователь не найден</div>
+	{% endif  %}
+
+</div>

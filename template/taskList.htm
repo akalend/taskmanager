@@ -1,0 +1,78 @@
+<html><head>
+<script type = "text/javascript">
+    var popUpObj;
+    function LoadModalDiv() {
+        var bcgDiv = document.getElementById("divBackground");
+        bcgDiv.style.display="block";
+    }    
+
+     function HideModalDiv() {
+        var bcgDiv = document.getElementById("divBackground");
+        bcgDiv.style.display="none";
+     }
+
+
+
+    function showModal(){
+
+        popUpObj=window.open("popup.htm",
+        "ModalPopUp",
+        "toolbar=no," +
+        "scrollbars=no," +
+        "location=no," +
+        "statusbar=no," +
+        "menubar=no," +
+        "resizable=0," +
+        "width=400," +
+        "height=400," +
+        "left = 490," +
+        "top=300" );
+
+        popUpObj.focus();
+        LoadModalDiv();  
+    }
+    function goInsert(){
+       window.location.href='/insert';
+    }
+</script>
+</head>
+<body>
+<div>
+<table>
+	<tr>
+		<th><a href="/1?order=id">id</a></th>
+		<th><a href="/1?order=username">Пользователь</a></th>
+		<th>email</th>
+	 	<th>Описание задачи</th>
+	 	<th><a href="/1?order=status">статус</a></th>
+ 	</tr>
+    {% for task in tasks %}
+    <tr>
+    	<td>{{ task.id }}</td>
+    	<td>{{ task.username }}</td>
+    	<td>{{ task.email }}</td>
+    	<td>{{ task.description }}</td>
+    	<td>{%if task.status==0 %}TODO{%endif%}
+            {%if task.status==1 %}в работе{%endif%}
+            {%if task.status==2 %}тестируется{%endif%}
+            {%if task.status==3 %}сделано{%endif%}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<div>
+    {% for page in pages %}
+    <a href="/{{ page }}?order={{ order }}">{{ page }}</a> 
+    {% endfor %}
+</div>
+<div>
+    
+    <input id="Button1" type="button" value="Добавить" onclick="goInsert()" />
+</div>
+
+
+<div id = "divBackground" style="position: fixed; z-index: 999; height: 100%; width: 100%; top: 0; left:0; background-color: Black; filter: alpha(opacity=60); opacity: 0.6; -moz-opacity: 0.8;display:none">
+</div>
+</body>
+</html>
