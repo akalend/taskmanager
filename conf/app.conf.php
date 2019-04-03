@@ -4,9 +4,9 @@
 */
 $db_conf = [
 	'host' 		=> 'localhost',
-	'dbname' 	=> 'test',
-	'user'		=> 'test',
-	'password'	=>	'test', 
+	'dbname' 	=> 'akalend',
+	'user'		=> 'akalend',
+	'password'	=>	'akalend', 
 ];
 
 $mc_conf = [

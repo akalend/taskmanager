@@ -89,7 +89,7 @@ abstract class DbModel {
 	 *
 	 * @description получение списка модели заданного диапазона
 	 */
-	public function getList(int $top = 0, int $limit = 0, $orderBy = null){
+	public function getList( $top = 0, $limit = 0, $orderBy = null){
 
 		if ($limit) { 
 			$limit = ' LIMIT ' . (string) $limit; 
@@ -97,7 +97,7 @@ abstract class DbModel {
 			$limit = '';
 		}
 
-		if ($top) { 
+		if ($top > 0) { 
 			$top = ' OFFSET ' . (string) $top; 
 		} else {
 			$top = '';
@@ -116,7 +116,7 @@ abstract class DbModel {
 	 *
 	 * @description получение списка модели заданного диапазона
 	 */
-	public function getById(string $id){
+	public function getById( $id ){
 
 		$query = 'SELECT * FROM ' . static::$_table . ' WHERE id=' . $id;
 		$ret = $this->exec($query);
@@ -151,11 +151,15 @@ abstract class DbModel {
 			    		);
 
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$this->db->query('USE ' . $this->conf['dbname']);
+
+
 
 			} catch (PDOException $e) {
 
 				die( 'Подключение не удалось: ' . $e->getMessage()); 
 			}
+
 
 		}	
 	}

@@ -39,7 +39,7 @@ public	function addXHttp($url, $callback, $isSecure = false){
 		];
 	}
 
-public function redirect(string $url) {
+public function redirect( $url) {
 				header('Location: ' . $url);
 			echo 'redirect to ' . $url;
 			die();
@@ -72,7 +72,7 @@ public function init($template) {
 	$this->template = $template;	
 }
 
-private	function checkUri(string $uri) {
+private	function checkUri($uri) {
 
 	if ($uri == $_SERVER['REQUEST_URI']) {
 		return true;

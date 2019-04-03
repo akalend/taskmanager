@@ -18,7 +18,7 @@ class TaskModel extends dbModel {
 		$this->page_size = $conf->get('app')['page_size'];		
 	}
 
-	public function getByPage(int $page, $orderBy=''){
+	public function getByPage( $page, $orderBy=''){
 		self::$pageCount = (int)$this->count();
 
 		$this->maxPage =  ceil( self::$pageCount / $this->page_size );
@@ -60,6 +60,9 @@ public function checkIn(array $data) {
 
 	if (count($ret) == 0) return false;
 
+	$_SESSION['username'] = $_POST['username'];
+	$_SESSION['email'] = $_POST['email'];
+	$_SESSION['description'] = $_POST['description'];
 	return $ret;
 }	
 
@@ -76,7 +79,7 @@ public function insert(array $data) {
 		$sql .= 'VALUES(:username, :description,:status,:email)';
 		
 		$stm = $this->db->prepare($sql);
-		// $stm->execute($data);
+		$stm->execute($data);
 	}
 
 }

@@ -2,10 +2,19 @@
 <head></head>
 <body>
 <form action='/insert' method="POST">
-		
-	Пользователь	<div><input type="text" name="username" value="" ></div><br/>
-	email			<div><input type="text" name="email" value="" ></div><br/>	
-	Описание задачи      	<div><textarea name="description"></textarea></div>
+	{% if error.username %}
+	<div style="color:red" >не заполнено поле</div>	
+	{% endif %}	
+	<div>Пользователь	<div><input type="text" name="username" value="{{ username }}" ></div><br/></div>
+	{% if error.email %}
+	<div style="color:red" >не правильный email</div>	
+	{% endif %}	
+	email			<div><input type="text" name="email" value="{{ email }}" ></div><br/>	
+	{% if error.description %}
+	<div style="color:red" >не заполнено поле</div>	
+	{% endif %}	
+
+	Описание задачи      	<div><textarea name="description">{{ description }}</textarea></div>
 	<input type="submit" value="Save" />
 	</form>
 </body>

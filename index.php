@@ -4,6 +4,8 @@ require_once 'vendor/autoload.php';
 require 'lib/application.php';
 require 'lib/model/taskmodel.php';
 
+// session_start();
+
 $loader = new Twig_Loader_Filesystem('template');
 $template = new Twig_Environment($loader, array(
     'cache' => 'cache',
@@ -45,23 +47,39 @@ $app->addPost('/admin/update', function () use ($app) {
 	}	
 }, true);
 
-$app->addGet('/inserterr', function () use ($app) {
-	if (isset($_GET['error'])) {
-		var_dump( $_GET['error'] );
-	}
+$app->addGet('/error/{error}', function () use ($app) {
+	$tmp = 'x+' . $app->getVar('error');
+	$tmp = explode('+', $tmp);
+	$errors = array_flip($tmp);	
+
+	$data = [];
+	$data['error'] = $errors;
+	$data['email'] = $_SESSION['email'];
+	$data['description'] = $_SESSION['description'];
+	$data['username'] = $_SESSION['username'];
+
+	echo $app->template->render('insert.htm', $data);
+});
+
+
+$app->addGet('/insert', function () use ($app) {		
 	echo $app->template->render('insert.htm');
 });
 
+
+
 $app->addPost('/insert', function () use ($app) {
+
+
 	$task = new TaskModel();
 	$error = $task->checkIn($_POST);
-	$parm = implode('.', $error);
 
 	if ($error === false) {
-		$task->insert($_POST);
-		$app->redirect('/');	
-	} else {
-		$app->redirect('/inserterr?error='. $parm);
+		 $task->insert($_POST);		 
+		 $app->redirect('/');			
+	} else {		
+		$parm = implode('+', $error);
+		$app->redirect('/error/'. $parm);
 	}
 });
 
